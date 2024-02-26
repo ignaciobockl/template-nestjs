@@ -25,7 +25,7 @@ const runCommand = (
   command: string,
   type: string,
   successMessage: string,
-  errorMessage: string,
+  errorMessage: string
 ) => {
   return new Promise<void>((resolve, reject) => {
     console.log(`⌛ ${type}...`);
@@ -34,19 +34,19 @@ const runCommand = (
       (error: ExecException | null, stdout: string, stderr: string) => {
         if (error) {
           console.error(
-            `\x1b[31m❌ ${errorMessage}\n${error.message}\n${stdout}\x1b[0m`,
+            `\x1b[31m❌ ${errorMessage}\n${error.message}\n${stdout}\x1b[0m`
           );
           reject();
         } else if (stderr) {
           console.error(
-            `\x1b[31m❌ ${errorMessage}\n${stderr}\n${stdout}\x1b[0m`,
+            `\x1b[31m❌ ${errorMessage}\n${stderr}\n${stdout}\x1b[0m`
           );
           reject();
         } else {
           console.log(`\x1b[32m✅ ${successMessage}\x1b[0m\n`);
           resolve();
         }
-      },
+      }
     );
   });
 };
@@ -104,12 +104,12 @@ const runBuildCommand = () => {
         console.log('\n\x1b[32m✅ Build succeeded\x1b[0m');
       }
       console.log(
-        '\n═════════════════════════════════════════════════════════════\n',
+        '\n═════════════════════════════════════════════════════════════\n'
       );
 
       // Restore .env.production
       restoreEnv();
-    },
+    }
   );
 };
 
@@ -153,11 +153,11 @@ const runPreBuildScript = async () => {
       'tsc',
       'TypeScript',
       'TypeScript compilation succeeded',
-      'TypeScript compilation failed\n\n',
+      'TypeScript compilation failed\n\n'
     );
     if (fixESLint) {
       console.log(
-        '\x1b[33m⚠️  WARNING: ESLint will check AND overwrite your files, starting in 5... ⚠️\x1b[0m',
+        '\x1b[33m⚠️  WARNING: ESLint will check AND overwrite your files, starting in 5... ⚠️\x1b[0m'
       );
       await new Promise((resolve) => {
         setTimeout(resolve, 5000);
@@ -168,11 +168,11 @@ const runPreBuildScript = async () => {
       `npx eslint . ${fixESLint ? '--fix' : ''}`,
       'ESLint',
       `ESLint ${fixESLint ? 'check and fix' : 'check'} passed`,
-      `ESLint ${fixESLint ? 'check and fix' : 'check'} failed\n\n`,
+      `ESLint ${fixESLint ? 'check and fix' : 'check'} failed\n\n`
     );
     if (isLint) {
       console.log(
-        '\x1b[33m⚠️  WARNING: Prettier will check AND overwrite your files, starting in 5... ⚠️\x1b[0m',
+        '\x1b[33m⚠️  WARNING: Prettier will check AND overwrite your files, starting in 5... ⚠️\x1b[0m'
       );
       await new Promise((resolve) => {
         setTimeout(resolve, 5000);
@@ -183,11 +183,11 @@ const runPreBuildScript = async () => {
       'npm run prettier:write',
       'Prettier',
       !isLint ? 'Prettier check passed' : 'Prettier fix finished',
-      !isLint ? 'Prettier check passed' : 'Prettier fix failed.\n\n',
+      !isLint ? 'Prettier check passed' : 'Prettier fix failed.\n\n'
     );
 
     console.log(
-      '═════════════════════════════════════════════════════════════\n',
+      '═════════════════════════════════════════════════════════════\n'
     );
 
     const message = {
@@ -202,11 +202,11 @@ const runPreBuildScript = async () => {
     const successMessage = gradient(
       '#7aecdd',
       '#ffffff',
-      '#f78df7',
+      '#f78df7'
     )(message[mode]);
     console.log(`\x1b[32m✨ ${successMessage} 🎉\x1b[0m\n`);
     console.log(
-      '═════════════════════════════════════════════════════════════\n',
+      '═════════════════════════════════════════════════════════════\n'
     );
 
     if (!isLint) runBuildCommand();
